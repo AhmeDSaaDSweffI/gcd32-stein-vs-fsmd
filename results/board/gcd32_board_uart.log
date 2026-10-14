@@ -1,0 +1,33 @@
+
+==== gcd32 AXI accelerator test (Zybo Z7-20) ====
+GCD core at 0x43C00000, ID = 0x47434431
+
+-- Directed tests --
+  gcd(14, 161) = 7  [7 cycles]  PASS
+  gcd(161, 14) = 7  [7 cycles]  PASS
+  gcd(0, 0) = 0  [1 cycles]  PASS
+  gcd(0, 12345) = 12345  [1 cycles]  PASS
+  gcd(98765, 0) = 98765  [1 cycles]  PASS
+  gcd(42, 42) = 42  [2 cycles]  PASS
+  gcd(1, 1) = 1  [2 cycles]  PASS
+  gcd(48, 180) = 12  [9 cycles]  PASS
+  gcd(1071, 462) = 21  [9 cycles]  PASS
+  gcd(360, 1001) = 1  [18 cycles]  PASS
+  gcd(111546435, 5311488) = 5187  [26 cycles]  PASS
+  gcd(2147483648, 1073741824) = 1073741824  [33 cycles]  PASS
+  gcd(2147483648, 3145728) = 1048576  [34 cycles]  PASS
+  gcd(4294967295, 1) = 1  [33 cycles]  PASS
+  gcd(4294967295, 4294967294) = 1  [64 cycles]  PASS
+  gcd(4294967295, 4294967295) = 4294967295  [2 cycles]  PASS
+  gcd(2971215073, 1836311903) = 1  [46 cycles]  PASS
+  gcd(4294967291, 4294967279) = 1  [36 cycles]  PASS
+
+-- Random regression: 10000 vectors vs software --
+  0 mismatches
+
+-- Time per call (10000 calls, includes AXI register access) --
+  PL accelerator : 1180 ns
+  ARM software   : 887 ns
+
+18 directed + 10000 random vectors, 0 failures
+ALL TESTS PASSED

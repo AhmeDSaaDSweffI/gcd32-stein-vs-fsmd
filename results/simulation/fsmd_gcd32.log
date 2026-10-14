@@ -1,0 +1,59 @@
+# vsim -t 1ps -voptargs="+acc" -onfinish stop work.tb_fsmd_gcd32 
+# Start time: 12:36:07 on Oct 14,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading work.tb_fsmd_gcd32(fast)
+# Loading work.fsmd_gcd32(fast)
+# 
+# === 1) Required test: gcd(14, 161) ===
+#   t=45 ns  a=14  b=161  SWAP
+#   t=55 ns  a=161  b=14  SUB 
+#   t=65 ns  a=147  b=14  SUB 
+#   t=75 ns  a=133  b=14  SUB 
+#   t=85 ns  a=119  b=14  SUB 
+#   t=95 ns  a=105  b=14  SUB 
+#   t=105 ns  a=91  b=14  SUB 
+#   t=115 ns  a=77  b=14  SUB 
+#   t=125 ns  a=63  b=14  SUB 
+#   t=135 ns  a=49  b=14  SUB 
+#   t=145 ns  a=35  b=14  SUB 
+#   t=155 ns  a=21  b=14  SUB 
+#   t=165 ns  a=7  b=14  SWAP
+#   t=175 ns  a=14  b=7  SUB 
+#   t=185 ns  a=7  b=7  SUB 
+#   t=195 ns  a=0  b=7  SWAP
+#   t=205 ns  a=7  b=0  FIN 
+# PASS gcd(14,161) = 7   latency = 18 cycles
+#   start sampled at t=35 ns, done = 1 and gcd_out = 7 at t=205 ns
+#   latency = 1 start cycle + 17 busy cycles = 18 cycles = 180 ns at 100 MHz
+# 
+# === 2) Corner cases ===
+# PASS gcd(161,14) = 7   latency = 17 cycles
+# PASS gcd(0,0) = 0   latency = 2 cycles
+# PASS gcd(0,12345) = 12345   latency = 3 cycles
+# PASS gcd(98765,0) = 98765   latency = 2 cycles
+# PASS gcd(42,42) = 42   latency = 4 cycles
+# PASS gcd(1,1) = 1   latency = 4 cycles
+# PASS gcd(2147483648,1073741824) = 1073741824   latency = 5 cycles
+# PASS gcd(4294967295,4294967295) = 4294967295   latency = 4 cycles
+# PASS gcd(2971215073,1836311903) = 1   latency = 93 cycles
+#   gcd(4294967295,1)          not simulated: model latency = 4294967298 cycles
+#   gcd(4294967295,4294967294) not simulated: model latency = 4294967299 cycles
+# 
+# === 3) Latency growth: gcd(2^n - 1, 1) ===
+#   n =  4 : latency = 18 cycles
+#   n =  8 : latency = 258 cycles
+#   n = 12 : latency = 4098 cycles
+#   n = 16 : latency = 65538 cycles
+#   n = 20 : latency = 1048578 cycles
+#   n = 32 : latency = 4294967298 cycles (model) = 42.9 s at 100 MHz
+# 
+# === 4) All pairs 0..31 + random regression (10000 vectors) ===
+#   random vectors: avg latency = 161.8 cycles   max latency = 112661 cycles
+# 
+# === Summary ===
+# tests = 11039   errors = 0 (result and latency checked)
+# ALL TESTS PASSED
+# ** Note: $finish    : ../tb/tb_fsmd_gcd32.v(155)
+#    Time: 27610240 ns  Iteration: 1  Instance: /tb_fsmd_gcd32
+# Break in Module tb_fsmd_gcd32 at ../tb/tb_fsmd_gcd32.v line 155
+# Stopped at ../tb/tb_fsmd_gcd32.v line 155

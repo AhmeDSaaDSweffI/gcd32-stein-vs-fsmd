@@ -1,0 +1,10 @@
+
+==== Regression summary (2026-10-14 12:37) ====
+gcd32            Stein core, Verilog testbench          PASS    7 s   tests = 10011   errors = 0
+gcd32_vhdl       Stein core in VHDL, VHDL testbench     PASS   11 s   tests = 10011   errors = 0
+vhdl_vs_verilog  VHDL core vs Verilog core, lockstep    PASS   22 s   tests = 75555   result/latency errors = 0   cycles where VHDL and Verilog outputs differ = 0
+fsmd_gcd32       FSMD core                              PASS   14 s   tests = 11039   errors = 0 (result and latency checked)
+compare          Both cores, same inputs                PASS   21 s   tests = 85565   errors = 0 (both cores: result and latency checked; fsmd simulated in 85557, model in 8)
+gcd32_axi        Stein core behind AXI4-Lite            PASS   11 s   checks = 3025   errors = 0
+fsmd_gcd32_axi   FSMD core behind AXI4-Lite             PASS   11 s   checks = 3028   errors = 0
+ALL 7 TESTBENCHES PASSED

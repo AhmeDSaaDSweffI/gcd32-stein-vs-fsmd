@@ -1,0 +1,8 @@
+# Normalize text files; keep LF for scripts that run under bash / Tcl on Linux
+* text=auto
+*.sh  text eol=lf
+*.tcl text eol=lf
+*.do  text eol=lf
+
+*.png binary
+*.pdf binary

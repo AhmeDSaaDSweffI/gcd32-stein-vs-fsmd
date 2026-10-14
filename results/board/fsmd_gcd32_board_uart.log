@@ -1,0 +1,35 @@
+
+==== fsmd_gcd32 AXI accelerator test (Zybo Z7-20) ====
+GCD core at 0x43C00000, ID = 0x47434432
+
+-- Directed tests (result and cycle count vs model) --
+  gcd(4294967295, 1) and gcd(4294967295, 4294967294) take 43 s each
+  gcd(14, 161) = 7  [18 cycles]  PASS
+  gcd(161, 14) = 7  [17 cycles]  PASS
+  gcd(0, 0) = 0  [2 cycles]  PASS
+  gcd(0, 12345) = 12345  [3 cycles]  PASS
+  gcd(98765, 0) = 98765  [2 cycles]  PASS
+  gcd(42, 42) = 42  [4 cycles]  PASS
+  gcd(1, 1) = 1  [4 cycles]  PASS
+  gcd(48, 180) = 12  [13 cycles]  PASS
+  gcd(1071, 462) = 21  [17 cycles]  PASS
+  gcd(360, 1001) = 1  [31 cycles]  PASS
+  gcd(111546435, 5311488) = 5187  [1049 cycles]  PASS
+  gcd(2147483648, 1073741824) = 1073741824  [5 cycles]  PASS
+  gcd(2147483648, 3145728) = 1048576  [690 cycles]  PASS
+  gcd(4294967295, 1) = 1  [4294967298 cycles = 42949 ms]  PASS
+  gcd(4294967295, 4294967294) = 1  [4294967299 cycles = 42949 ms]  PASS
+  gcd(4294967295, 4294967295) = 4294967295  [4 cycles]  PASS
+  gcd(2971215073, 1836311903) = 1  [93 cycles]  PASS
+  gcd(4294967291, 4294967279) = 1  [357913958 cycles = 3579 ms]  PASS
+
+-- Random regression: 10000 vectors vs software --
+  0 mismatches
+  core latency: avg 131 cycles, max 31644 cycles
+
+-- Time per call (10000 calls, includes AXI register access) --
+  PL accelerator : 2173 ns
+  ARM software   : 903 ns
+
+18 directed + 10000 random vectors, 0 failures
+ALL TESTS PASSED

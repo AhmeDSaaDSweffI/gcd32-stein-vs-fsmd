@@ -1,0 +1,93 @@
+# vsim -t 1ps -voptargs="+acc" -onfinish stop work.tb_compare 
+# Start time: 12:36:21 on Oct 14,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading work.tb_compare(fast)
+# Loading work.gcd32(fast)
+# Loading work.fsmd_gcd32(fast)
+# 
+# === 1) gcd(14, 161) on both cores (same start edge) ===
+#   register values before each rising clock edge, and the operation at that edge
+#                 | gcd32 (Stein)                            | fsmd_gcd32
+#   cycle    time |          a          b   k      operation |          a          b  operation
+#       1   35 ns |          0          0   0           LOAD |          0          0      LOAD
+#       2   45 ns |         14        161   0           a>>1 |         14        161      SWAP
+#       3   55 ns |          7        161   0     b=(b-a)>>1 |        161         14       SUB
+#       4   65 ns |          7         77   0     b=(b-a)>>1 |        147         14       SUB
+#       5   75 ns |          7         35   0     b=(b-a)>>1 |        133         14       SUB
+#       6   85 ns |          7         14   0           b>>1 |        119         14       SUB
+#       7   95 ns |          7          7   0      DONE(a=b) |        105         14       SUB
+#       8  105 ns |          7          7   0           idle |         91         14       SUB
+#       9  115 ns |          7          7   0           idle |         77         14       SUB
+#      10  125 ns |          7          7   0           idle |         63         14       SUB
+#      11  135 ns |          7          7   0           idle |         49         14       SUB
+#      12  145 ns |          7          7   0           idle |         35         14       SUB
+#      13  155 ns |          7          7   0           idle |         21         14       SUB
+#      14  165 ns |          7          7   0           idle |          7         14      SWAP
+#      15  175 ns |          7          7   0           idle |         14          7       SUB
+#      16  185 ns |          7          7   0           idle |          7          7       SUB
+#      17  195 ns |          7          7   0           idle |          0          7      SWAP
+#      18  205 ns |          7          7   0           idle |          7          0  FIN(b=0)
+#   PASS gcd(14,161) = 7   stein = 7 cycles   fsmd = 18 cycles
+#   gcd32      : start sampled at t=35 ns, done = 1 with gcd_out = 7 at t=95 ns: latency 7 cycles = 70 ns at 100 MHz
+#   fsmd_gcd32 : start sampled at t=35 ns, done = 1 with gcd_out = 7 at t=205 ns: latency 18 cycles = 180 ns at 100 MHz
+#   gcd32 is done 11 cycles (110 ns) earlier: 2.57x faster on gcd(14, 161)
+# 
+# === 2) Directed vectors of the board test (zynq/gcd32/main.c) ===
+#   PASS gcd(14,161) = 7   stein = 7 cycles   fsmd = 18 cycles
+#   PASS gcd(161,14) = 7   stein = 7 cycles   fsmd = 17 cycles
+#   PASS gcd(0,0) = 0   stein = 1 cycles   fsmd = 2 cycles
+#   PASS gcd(0,12345) = 12345   stein = 1 cycles   fsmd = 3 cycles
+#   PASS gcd(98765,0) = 98765   stein = 1 cycles   fsmd = 2 cycles
+#   PASS gcd(42,42) = 42   stein = 2 cycles   fsmd = 4 cycles
+#   PASS gcd(1,1) = 1   stein = 2 cycles   fsmd = 4 cycles
+#   PASS gcd(48,180) = 12   stein = 9 cycles   fsmd = 13 cycles
+#   PASS gcd(1071,462) = 21   stein = 9 cycles   fsmd = 17 cycles
+#   PASS gcd(360,1001) = 1   stein = 18 cycles   fsmd = 31 cycles
+#   PASS gcd(111546435,5311488) = 5187   stein = 26 cycles   fsmd = 1049 cycles
+#   PASS gcd(2147483648,1073741824) = 1073741824   stein = 33 cycles   fsmd = 5 cycles
+#   PASS gcd(2147483648,3145728) = 1048576   stein = 34 cycles   fsmd = 690 cycles
+#   PASS gcd(4294967295,1) = 1   stein = 33 cycles   fsmd = 4294967298 cycles (model, not simulated)
+#   PASS gcd(4294967295,4294967294) = 1   stein = 64 cycles   fsmd = 4294967299 cycles (model, not simulated)
+#   PASS gcd(4294967295,4294967295) = 4294967295   stein = 2 cycles   fsmd = 4 cycles
+#   PASS gcd(2971215073,1836311903) = 1   stein = 46 cycles   fsmd = 93 cycles
+#   PASS gcd(4294967291,4294967279) = 1   stein = 36 cycles   fsmd = 357913958 cycles (model, not simulated)
+# 
+# === 3) Latency growth: gcd(2^n - 1, 1) ===
+#   n =  4 : stein = 5 cycles   fsmd = 18 cycles
+#   n =  8 : stein = 9 cycles   fsmd = 258 cycles
+#   n = 12 : stein = 13 cycles   fsmd = 4098 cycles
+#   n = 16 : stein = 17 cycles   fsmd = 65538 cycles
+#   n = 20 : stein = 21 cycles   fsmd = 1048578 cycles
+#   n = 24 : stein = 25 cycles   fsmd = 16777218 cycles (model)
+#   n = 28 : stein = 29 cycles   fsmd = 268435458 cycles (model)
+#   n = 32 : stein = 33 cycles   fsmd = 4294967298 cycles (model)
+#   32-bit worst cases: gcd32 2n = 64 cycles, fsmd_gcd32 2^n + 4 = 4294967300 cycles
+#   PASS gcd(4294967295,4294967294) = 1   stein = 64 cycles   fsmd = 4294967299 cycles (model, not simulated)
+#   PASS gcd(4294967294,4294967295) = 1   stein = 64 cycles   fsmd = 4294967300 cycles (model, not simulated)
+# 
+# === 4) All operand pairs 0..255 (exhaustive 8-bit) ===
+#   vectors = 65536
+#   gcd32      : avg 10.78 cycles   min 1   max 16   total 706517 cycles = 7.065 ms at 100 MHz
+#   fsmd_gcd32 : avg 27.08 cycles   min 2   max 260   total 1774770 cycles = 17.748 ms at 100 MHz
+#   faster: gcd32 on 65393 vectors, fsmd_gcd32 on 57, equal on 86; avg fsmd/gcd32 = 2.51
+# 
+# === 5) Random regression, mix of tb_gcd32 / tb_fsmd_gcd32 (10000 vectors, $random) ===
+#   vectors = 10000
+#   gcd32      : avg 35.75 cycles   min 7   max 59   total 357487 cycles = 3.575 ms at 100 MHz
+#   fsmd_gcd32 : avg 161.79 cycles   min 9   max 112661   total 1617899 cycles = 16.179 ms at 100 MHz
+#   faster: gcd32 on 9983 vectors, fsmd_gcd32 on 15, equal on 2; avg fsmd/gcd32 = 4.53
+# 
+# === 6) Random regression of the board test (10000 vectors, xorshift32 of main.c) ===
+#   vectors = 10000
+#   gcd32      : avg 35.76 cycles   min 7   max 58   total 357608 cycles = 3.576 ms at 100 MHz
+#   fsmd_gcd32 : avg 131.51 cycles   min 14   max 31644   total 1315070 cycles = 13.151 ms at 100 MHz
+#   faster: gcd32 on 9976 vectors, fsmd_gcd32 on 14, equal on 10; avg fsmd/gcd32 = 3.68
+#   as the board driver prints it (integer average): gcd32 avg 35 / max 58, fsmd_gcd32 avg 131 / max 31644
+# 
+# === Summary ===
+# tests = 85565   errors = 0 (both cores: result and latency checked; fsmd simulated in 85557, model in 8)
+# ALL TESTS PASSED
+# ** Note: $finish    : ../tb/tb_compare.v(368)
+#    Time: 59143050 ns  Iteration: 1  Instance: /tb_compare
+# Break in Module tb_compare at ../tb/tb_compare.v line 368
+# Stopped at ../tb/tb_compare.v line 368

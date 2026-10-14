@@ -1,0 +1,15 @@
+# synth_ooc.tcl: out-of-context synthesis + place & route, Vivado 2021.1, xc7z020clg400-1, 2026-10-12 10:30
+# area run: 10 ns clock (board PL clock); fmax run: 3 ns clock, Fmax = 1000 / (clock - WNS); post-route counts
+run   core        clk_ns  LUTs  logic  FFs  CARRY4  F7  F8  Slices  BRAM  DSP   WNS_ns  Fmax_MHz
+area  gcd32         10.0   259    259  103      20   0   0      73     0    0    4.354       177
+area  fsmd_gcd32    10.0   110    110   98       9   0   0      38     0    0    4.092       169
+fmax  gcd32          3.0   270    270  103      20   0   0      88     0    0   -1.644       215
+fmax  fsmd_gcd32     3.0   117    117   98       9   0   0      49     0    0   -1.646       215
+primitives area gcd32: CARRY4=20 FDRE=103 LUT1=2 LUT2=68 LUT3=13 LUT4=26 LUT5=20 LUT6=146
+critical path area gcd32: a_reg[0]/C -> gcd_out_reg[18]/CE, data path 5.357 ns, logic levels 5  (CARRY4=3 LUT4=1 LUT6=1)
+primitives area fsmd_gcd32: CARRY4=9 FDRE=98 LUT1=1 LUT2=33 LUT3=3 LUT4=38 LUT5=4 LUT6=33
+critical path area fsmd_gcd32: b_reg[5]/C -> b_reg[26]/CE, data path 5.619 ns, logic levels 11  (CARRY4=8 LUT2=1 LUT3=1 LUT6=1)
+primitives fmax gcd32: CARRY4=20 FDRE=103 LUT1=2 LUT2=68 LUT3=13 LUT4=26 LUT5=20 LUT6=146
+critical path fmax gcd32: b_reg[1]/C -> b_reg[0]/CE, data path 4.391 ns, logic levels 5  (CARRY4=3 LUT6=2)
+primitives fmax fsmd_gcd32: CARRY4=9 FDRE=98 LUT1=1 LUT2=34 LUT3=2 LUT4=38 LUT5=4 LUT6=39
+critical path fmax fsmd_gcd32: b_reg[3]/C -> a_reg[18]/D, data path 4.593 ns, logic levels 12  (CARRY4=9 LUT2=1 LUT6=2)

@@ -1,0 +1,37 @@
+# vsim -t 1ps -onfinish stop work.tb_fsmd_gcd32_axi 
+# Start time: 12:36:53 on Oct 14,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading work.tb_fsmd_gcd32_axi(fast)
+# 
+# === Register map ===
+# 
+# === START handling ===
+# start handling checked
+# 
+# === Directed vectors ===
+# PASS gcd(14,161) = 7   cycles = 18
+# PASS gcd(161,14) = 7   cycles = 17
+# PASS gcd(0,0) = 0   cycles = 2
+# PASS gcd(0,12345) = 12345   cycles = 3
+# PASS gcd(98765,0) = 98765   cycles = 2
+# PASS gcd(42,42) = 42   cycles = 4
+# PASS gcd(1,1) = 1   cycles = 4
+# PASS gcd(48,180) = 12   cycles = 13
+# PASS gcd(2147483648,1073741824) = 1073741824   cycles = 5
+# PASS gcd(2147483648,3145728) = 1048576   cycles = 690
+# PASS gcd(65535,1) = 1   cycles = 65538
+# PASS gcd(4294967295,4294967295) = 4294967295   cycles = 4
+# PASS gcd(2971215073,1836311903) = 1   cycles = 93
+# 
+# === 64-bit CYCLES counter ===
+# PASS CYCLES_HI:CYCLES = 0x00000001_000002e7 after crossing 2^32
+# 
+# === Random regression (3000 vectors) ===
+# 
+# === Summary ===
+# checks = 3028   errors = 0
+# ALL TESTS PASSED
+# ** Note: $finish    : ../tb/tb_fsmd_gcd32_axi.v(279)
+#    Time: 6346450 ns  Iteration: 1  Instance: /tb_fsmd_gcd32_axi
+# Break at ../tb/tb_fsmd_gcd32_axi.v line 279
+# Stopped at ../tb/tb_fsmd_gcd32_axi.v line 279

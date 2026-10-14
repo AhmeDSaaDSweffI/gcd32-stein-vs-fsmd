@@ -1,0 +1,33 @@
+# ---- QuestaSim / ModelSim (generated in sim/) ----
+sim/work/
+sim/verilog_lib/
+sim/modelsim.ini
+sim/transcript
+sim/*.log
+sim/*.wlf
+sim/wlf*
+sim/*.vstf
+# files written by the testbenches
+sim/*.vcd
+sim/*.csv
+
+# ---- Vivado / Vitis ----
+.Xil/
+*.jou
+vivado*.log
+vivado*.str
+xsim.dir/
+webtalk*
+# Zybo flow outputs (zynq/<design>/build, zynq/<design>/results)
+zynq/*/build/
+zynq/*/results/
+# out-of-context synthesis runs
+synth/run/
+
+# ---- OS / editors ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+*.swp
+*~
